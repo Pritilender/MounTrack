@@ -4,10 +4,10 @@ import {Places} from './places';
 
 @NgModule({
     declarations: [
-        Places,
+        Places
     ],
     imports: [
-        IonicModule.forRoot(Places),
+        IonicModule.forRoot(Places)
     ],
     exports: [
         Places

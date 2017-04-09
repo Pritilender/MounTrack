@@ -8,6 +8,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {About} from '../pages/about/about';
 import {Places} from '../pages/places/places';
 import {Map} from '../pages/map/map';
+import {Place} from '../pages/place/place';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {Map} from '../pages/map/map';
         About,
         Map,
         Places,
-        TabsPage
+        TabsPage,
+        Place
     ],
     imports: [
         BrowserModule,
@@ -27,7 +29,8 @@ import {Map} from '../pages/map/map';
         About,
         Map,
         Places,
-        TabsPage
+        TabsPage,
+        Place
     ],
     providers: [
         StatusBar,
