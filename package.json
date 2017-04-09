@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "MounTrack",
+  "author": "Elitni Planinari",
+  "homepage": "http://github.com/Pritilender/MounTrack",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
