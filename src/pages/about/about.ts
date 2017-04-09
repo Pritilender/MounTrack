@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 /**
  * Generated class for the About page.
@@ -9,16 +9,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  */
 @IonicPage()
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html',
+    selector: 'page-about',
+    templateUrl: 'about.html',
 })
 export class About {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad About');
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad About');
+    }
 
 }
