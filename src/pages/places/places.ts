@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from "@angular/core";
+import {AfterViewInit, Component, OnDestroy} from "@angular/core";
 import {IonicPage, ModalController, NavController, NavParams} from "ionic-angular";
 import {EditPlace} from "../edit-place/edit-place";
 import {PlaceService, PlaceTypeShort} from "../../providers/place-service";
@@ -9,7 +9,7 @@ import {NewPlace} from "../new-place/new-place";
     selector: 'page-places',
     templateUrl: 'places.html',
 })
-export class Places implements AfterViewInit {
+export class Places {
     public places: PlaceTypeShort[];
 
     /**
@@ -43,12 +43,10 @@ export class Places implements AfterViewInit {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private _modalCtrl: ModalController,
-                private _placeService: PlaceService
-    ) {
+                private _placeService: PlaceService) {
     }
 
-    ngAfterViewInit() {
+    ionViewWillEnter() {
         this.places = this._placeService.getShortPlaces();
     }
-
 }

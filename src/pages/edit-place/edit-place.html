@@ -10,11 +10,11 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>Name</ion-label>
-    <ion-input [value]="place.name"></ion-input>
+    <ion-input [(ngModel)]="place.name"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Description</ion-label>
-    <ion-textarea rows="5" [value]="place.description"></ion-textarea>
+    <ion-textarea rows="5" [(ngModel)]="place.description"></ion-textarea>
   </ion-item>
 
   <ion-grid>
@@ -22,24 +22,37 @@
       <ion-col>
         <ion-item>
           <ion-label floating>Latitude</ion-label>
-          <ion-input type="number" [value]="place.coordinates.lat"></ion-input>
+          <ion-input type="number" [(ngModel)]="place.coordinates.lat"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col>
         <ion-item>
           <ion-label floating>Longitutde</ion-label>
-          <ion-input type="number" [value]="place.coordinates.lng"></ion-input>
+          <ion-input type="number" [(ngModel)]="place.coordinates.lng"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button block>
-          <span id="btnLocate">Relocate!</span>
-          <ion-icon name="locate"></ion-icon>
+        <button ion-button block icon-right>
+          Relocate!
+          <ion-icon name="Locate"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click)="cancel()">
+          Discard
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button block (click)="updatePlace()">
+          Update
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
 
 </ion-content>

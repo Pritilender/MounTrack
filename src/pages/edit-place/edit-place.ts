@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
+import * as deepCopy from 'lodash.clonedeep';
 
 @IonicPage()
 @Component({
@@ -13,9 +14,27 @@ export class EditPlace {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private _placeService: PlaceService,
-    ) {
+                private _alertCtrl: AlertController) {
         let id: string = navParams.get('data')['id'];
-        this.place = _placeService.getPlaceById(id);
+        // deep copy place to avoid changing the original element because of ngModel
+        this.place = deepCopy(_placeService.getPlaceById(id));
+    }
+
+    public updatePlace(): void {
+        if (this.place.name != '') {
+            this._placeService.editPlace(this.place);
+            this.navCtrl.pop();
+        } else {
+            this._alertCtrl.create({
+                title: 'Error!',
+                message: 'You need to specify the name for a place.',
+                buttons: ['Ok'],
+            }).present();
+        }
+    }
+
+    public cancel(): void {
+        this.navCtrl.pop();
     }
 
 }
