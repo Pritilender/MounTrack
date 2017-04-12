@@ -37,4 +37,24 @@ export class EditPlace {
         this.navCtrl.pop();
     }
 
+    public deletePlace(): void {
+        let prompt = this._alertCtrl.create({
+            title: "Warning!",
+            message: `Are you sure you want to delete place "${this.place.name}" from your places list?`,
+            buttons: [
+                {
+                    text: 'No',
+                },
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this._placeService.deletePlace(this.place.id);
+                        this.navCtrl.pop();
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    }
+
 }

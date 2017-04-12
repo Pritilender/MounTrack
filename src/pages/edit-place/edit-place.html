@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title>{{place.name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (press)="deletePlace()">
+        <ion-icon name='trash'></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
