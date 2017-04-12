@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { Place } from './place';
+import { EditPlace } from './edit-place';
 
 @NgModule({
   declarations: [
-    Place,
+    EditPlace,
   ],
   imports: [
-    IonicModule.forRoot(Place),
+    IonicModule.forRoot(EditPlace),
   ],
   exports: [
-    Place
+    EditPlace
   ]
 })
 export class PlaceModule {}

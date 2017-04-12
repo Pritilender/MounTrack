@@ -8,8 +8,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {About} from '../pages/about/about';
 import {Places} from '../pages/places/places';
 import {Map} from '../pages/map/map';
-import {Place} from '../pages/place/place';
+import {EditPlace} from '../pages/edit-place/edit-place';
 import {PlaceService} from "../providers/place-service";
+import {NewPlace} from "../pages/new-place/new-place";
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import {PlaceService} from "../providers/place-service";
         Map,
         Places,
         TabsPage,
-        Place,
+        EditPlace,
+        NewPlace,
     ],
     imports: [
         BrowserModule,
@@ -28,10 +30,11 @@ import {PlaceService} from "../providers/place-service";
     entryComponents: [
         MyApp,
         About,
-        Place,
+        EditPlace,
         Map,
         Places,
         TabsPage,
+        NewPlace,
     ],
     providers: [
         StatusBar,

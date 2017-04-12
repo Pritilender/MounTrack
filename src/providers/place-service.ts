@@ -23,8 +23,8 @@ export class PlaceService {
     private _places: PlaceTypeLong[] = [
         {
             id: '1',
-            name: 'Place A',
-            description: 'Simple place',
+            name: 'EditPlace A',
+            description: 'Simple edit-place',
             coordinates: {
                 lat: 21,
                 lng: 23,
@@ -32,8 +32,8 @@ export class PlaceService {
         },
         {
             id: '2',
-            name: 'Place B',
-            description: 'Again, simple place',
+            name: 'EditPlace B',
+            description: 'Again, simple edit-place',
             coordinates: {
                 lat: 21.23,
                 lng: 41.23,
@@ -41,8 +41,8 @@ export class PlaceService {
         },
         {
             id: '3',
-            name: 'A Place with a long name A',
-            description: 'My god! Such a long name for a simple place! :O',
+            name: 'A EditPlace with a long name A',
+            description: 'My god! Such a long name for a simple edit-place! :O',
             coordinates: {
                 lat: 32.2,
                 lng: 48.2,
@@ -50,8 +50,8 @@ export class PlaceService {
         },
         {
             id: '4',
-            name: 'A Place with a very, very long name B',
-            description: 'My god! Such a long name for a simple place! :O',
+            name: 'A EditPlace with a very, very long name B',
+            description: 'My god! Such a long name for a simple edit-place! :O',
             coordinates: {
                 lat: 22,
                 lng: 49,
@@ -59,6 +59,10 @@ export class PlaceService {
         },
     ];
 
+    /**
+     *
+     * @returns {[{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string}]}
+     */
     public getShortPlaces(): PlaceTypeShort[] {
         return this._places.map(place => ({
             id: place.id,
@@ -67,10 +71,36 @@ export class PlaceService {
         }));
     }
 
-    public addNew(place: PlaceTypeLong): void {
-        this._places.push(place);
+    /**
+     *
+     * @param id
+     * @returns {PlaceTypeLong}
+     */
+    public getPlaceById(id: string): PlaceTypeLong {
+        let place = this._places.find(place => place.id == id);
+        if (place) {
+            return place;
+        } else {
+            throw `There is no place with an id ${id}!`;
+        }
     }
 
+    /**
+     *
+     * @param place
+     * @returns {string}
+     */
+    public addNew(place: PlaceTypeLong): string {
+        let id = Date.now().toString(32);
+        place.id = id;
+        this._places.push(place);
+        return id;
+    }
+
+    /**
+     *
+     * @param place
+     */
     public editPlace(place: PlaceTypeLong): void {
         let el = this._places.find(element => element.id == place.id);
         let index = this._places.indexOf(el);
@@ -82,6 +112,10 @@ export class PlaceService {
         }
     }
 
+    /**
+     *
+     * @param placeId
+     */
     public deletePlace(placeId: string): void {
         let el = this._places.find(element => element.id == placeId);
         let index = this._places.indexOf(el);

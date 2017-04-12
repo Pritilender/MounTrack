@@ -1,7 +1,8 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Place} from '../place/place';
+import {AfterViewInit, Component} from "@angular/core";
+import {IonicPage, ModalController, NavController, NavParams} from "ionic-angular";
+import {EditPlace} from "../edit-place/edit-place";
 import {PlaceService, PlaceTypeShort} from "../../providers/place-service";
+import {NewPlace} from "../new-place/new-place";
 
 @IonicPage()
 @Component({
@@ -11,22 +12,37 @@ import {PlaceService, PlaceTypeShort} from "../../providers/place-service";
 export class Places implements AfterViewInit {
     public places: PlaceTypeShort[];
 
-    public placeSelected(place: PlaceTypeShort): void {
-        // navigate to a detail page
-        this.navCtrl.push(Place, {
+    /**
+     * Navigate to a detail page.
+     * @param id place ID to display
+     */
+    public placeIdSelected(id: string): void {
+        this.navCtrl.push(EditPlace, {
             data: {
-                name: place.name,
-                description: place.description,
-                coordinates: {
-                    lat: 21,
-                    lng: 43
-                }
+                id
             }
         });
     }
 
+    /**
+     * Show modal for adding new place.
+     */
+    public newPlace() {
+        let modal = this._modalCtrl.create(NewPlace);
+
+        modal.onDidDismiss(data => {
+            // TODO add toast if there is data
+            if (data) {
+                this.places.push(data);
+            }
+        });
+
+        modal.present();
+    }
+
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
+                private _modalCtrl: ModalController,
                 private _placeService: PlaceService
     ) {
     }

@@ -9,9 +9,16 @@
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let place of places" (click)="placeSelected(place)">
+    <button ion-item *ngFor="let place of places" (click)="placeIdSelected(place.id)">
       <h1>{{place.name}}</h1>
       <p>{{place.description}}</p>
     </button>
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="newPlace()">
+      <ion-icon name="add">
+      </ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
