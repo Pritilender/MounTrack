@@ -26,11 +26,7 @@ export class NewPlace {
     public save(): void {
         if (this.place.name != '') {
             let id = this._placeService.addNew(this.place);
-            this._viewCtrl.dismiss({
-                name: this.place.name,
-                description: this.place.description,
-                id,
-            });
+            this._viewCtrl.dismiss();
         } else {
             this._alertCtrl.create({
                 title: 'Error!',

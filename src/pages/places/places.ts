@@ -30,13 +30,6 @@ export class Places {
     public newPlace() {
         let modal = this._modalCtrl.create(NewPlace);
 
-        modal.onDidDismiss(data => {
-            // TODO add toast if there is data
-            if (data) {
-                this.places.push(data);
-            }
-        });
-
         modal.present();
     }
 
