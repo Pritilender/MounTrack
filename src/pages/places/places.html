@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let place of placeSource" (click)="placeSelected(place)">
+    <button ion-item *ngFor="let place of places" (click)="placeSelected(place)">
       <h1>{{place.name}}</h1>
       <p>{{place.description}}</p>
     </button>

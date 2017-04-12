@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {PlaceTypeLong} from '../places/places';
+import {PlaceTypeLong} from "../../providers/place-service";
 
 @IonicPage()
 @Component({

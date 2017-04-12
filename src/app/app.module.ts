@@ -9,6 +9,7 @@ import {About} from '../pages/about/about';
 import {Places} from '../pages/places/places';
 import {Map} from '../pages/map/map';
 import {Place} from '../pages/place/place';
+import {PlaceService} from "../providers/place-service";
 
 @NgModule({
     declarations: [
@@ -17,25 +18,29 @@ import {Place} from '../pages/place/place';
         Map,
         Places,
         TabsPage,
-        Place
+        Place,
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
         About,
+        Place,
         Map,
         Places,
         TabsPage,
-        Place
     ],
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler}
+        {
+            provide: ErrorHandler,
+            useClass: IonicErrorHandler
+        },
+        PlaceService,
     ]
 })
 export class AppModule {
