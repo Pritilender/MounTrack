@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component} from "@angular/core";
+import {AlertController, IonicPage, NavController, NavParams} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
-import * as deepCopy from 'lodash.clonedeep';
+import * as deepCopy from "lodash.clonedeep";
 
 @IonicPage()
 @Component({

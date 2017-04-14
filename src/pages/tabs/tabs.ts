@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Places} from '../places/places';
-import {Map} from '../map/map';
+import {Component} from "@angular/core";
+import {Places} from "../places/places";
+import {Map} from "../map/map";
 
 @Component({
     templateUrl: 'tabs.html'

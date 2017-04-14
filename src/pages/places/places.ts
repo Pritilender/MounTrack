@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy} from "@angular/core";
+import {Component} from "@angular/core";
 import {AlertController, IonicPage, ModalController, NavController, NavParams} from "ionic-angular";
 import {EditPlace} from "../edit-place/edit-place";
 import {PlaceService, PlaceTypeShort} from "../../providers/place-service";
@@ -48,7 +48,7 @@ export class Places {
     public deletePlace(place: PlaceTypeShort): void {
         let prompt = this._alertCtrl.create({
             title: "Warning!",
-            message: `!Are you sure you want to delete place "${place.name}" from your places list?`,
+            message: `Are you sure you want to delete place "${place.name}" from your places list?`,
             buttons: [
                 {
                     text: 'No',
