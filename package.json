@@ -8,9 +8,13 @@
     "build": "ionic-app-scripts build",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "ios:run": "ionic run ios --target=iPhone-6s -c -l",
+    "ios:live": "ionic run ios --target=iPhone-6s -c -l",
+    "ios:run": "ionic run ios --target=iPhone-6s",
+    "ios:device": "ionic run ios --device",
     "android:emulator": "$ANDROID_HOME/tools/emulator -avd Nexus_5X_API_25_x86",
-    "android:run": "ionic run android -c -l"
+    "android:live": "ionic run android -c -l",
+    "android:run": "ionic run android --emulator",
+    "android:device": "ionic run android --device"
   },
   "dependencies": {
     "@angular/common": "4.0.0",
