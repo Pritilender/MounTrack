@@ -10,7 +10,7 @@ import {Geolocation} from "@ionic-native/geolocation";
 })
 export class NewPlace implements AfterViewInit {
     public place: PlaceTypeLong = {
-        id: '',
+        id: 0,
         name: '',
         description: '',
         coordinates: {

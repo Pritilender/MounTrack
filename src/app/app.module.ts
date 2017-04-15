@@ -11,6 +11,7 @@ import {Map} from "../pages/map/map";
 import {EditPlace} from "../pages/edit-place/edit-place";
 import {PlaceService} from "../providers/place-service";
 import {NewPlace} from "../pages/new-place/new-place";
+import {SqliteService} from "../providers/sqlite-service";
 
 @NgModule({
     declarations: [
@@ -43,6 +44,7 @@ import {NewPlace} from "../pages/new-place/new-place";
             provide: ErrorHandler,
             useClass: IonicErrorHandler
         },
+        SqliteService,
         PlaceService,
     ]
 })

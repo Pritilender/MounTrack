@@ -15,7 +15,7 @@ export class EditPlace {
                 public navParams: NavParams,
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController) {
-        let id: string = navParams.get('data')['id'];
+        let id: number = navParams.get('data')['id'];
         // deep copy place to avoid changing the original element because of ngModel
         this.place = deepCopy(_placeService.getPlaceById(id));
     }

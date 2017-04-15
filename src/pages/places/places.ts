@@ -16,7 +16,7 @@ export class Places {
      * Navigate to a detail page.
      * @param id place ID to display
      */
-    public placeIdSelected(id: string): void {
+    public placeIdSelected(id: number): void {
         this.navCtrl.push(EditPlace, {
             data: {
                 id
@@ -29,8 +29,6 @@ export class Places {
      */
     public newPlace() {
         let modal = this._modalCtrl.create(NewPlace);
-
-        modal.onDidDismiss(_ => this.update());
         modal.present();
     }
 
@@ -39,10 +37,14 @@ export class Places {
                 private _modalCtrl: ModalController,
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController) {
-    }
-
-    ionViewWillEnter() {
-        this.update();
+        this._placeService._placesSubject
+            .subscribe(places => {
+                this.places = places.map(place => ({
+                    name: place.name,
+                    id: place.id,
+                    description: place.description
+                }))
+            })
     }
 
     public deletePlace(place: PlaceTypeShort): void {
@@ -57,15 +59,10 @@ export class Places {
                     text: 'Yes',
                     handler: () => {
                         this._placeService.deletePlace(place.id);
-                        this.update();
                     }
                 }
             ]
         });
         prompt.present();
-    }
-
-    private update() {
-        this.places = this._placeService.getShortPlaces();
     }
 }
