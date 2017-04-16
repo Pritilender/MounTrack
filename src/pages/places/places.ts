@@ -37,7 +37,7 @@ export class Places {
                 private _modalCtrl: ModalController,
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController) {
-        this._placeService._placesSubject
+        this._placeService.places$
             .subscribe(places => {
                 this.places = places.map(place => ({
                     name: place.name,

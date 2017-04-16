@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
 import {SqliteService} from "./sqlite-service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {Observable} from "rxjs/Observable";
 
 export interface PlaceTypeShort {
     id: number;
@@ -60,7 +61,8 @@ export class PlaceService {
          },
          },*/
     ];
-    public _placesSubject: ReplaySubject<PlaceTypeLong[]> = new ReplaySubject(1);
+    private _placesSubject: ReplaySubject<PlaceTypeLong[]> = new ReplaySubject(1);
+    public places$: Observable<PlaceTypeLong[]> = this._placesSubject.asObservable();
 
     /**
      *
