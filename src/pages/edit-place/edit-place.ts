@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
-import {AlertController, IonicPage, NavController, NavParams} from "ionic-angular";
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
 import * as deepCopy from "lodash.clonedeep";
+import {GeolocationService} from "../../providers/geolocation-service";
 
 @IonicPage()
 @Component({
@@ -14,7 +15,10 @@ export class EditPlace {
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private _placeService: PlaceService,
-                private _alertCtrl: AlertController) {
+                private _alertCtrl: AlertController,
+                private _loadingCtrl: LoadingController,
+                private _geolocationService: GeolocationService
+    ) {
         let id: number = navParams.get('data')['id'];
         // deep copy place to avoid changing the original element because of ngModel
         this.place = deepCopy(_placeService.getPlaceById(id));
@@ -55,6 +59,27 @@ export class EditPlace {
             ]
         });
         prompt.present();
+    }
+
+    /**
+     * Fetches current coordinates and show spinner while fetching is in progress.
+     */
+    public locatePlace(): void {
+        let loading = this._loadingCtrl.create({
+            content: 'Fetching current position...',
+        });
+        loading.present();
+
+        this._geolocationService.getCurrentPosition()
+            .then(position => {
+                this.place.coordinates.lat = position.coords.latitude;
+                this.place.coordinates.lng = position.coords.longitude;
+                loading.dismiss();
+            })
+            .catch((error: PositionError) => {
+                loading.dismiss();
+                alert(`Position error: '${error.message}'. Error code: ${error.code}`);
+            });
     }
 
 }

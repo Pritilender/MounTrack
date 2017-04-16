@@ -1,14 +1,14 @@
-import {AfterViewInit, Component} from "@angular/core";
+import {Component} from "@angular/core";
 import {AlertController, IonicPage, LoadingController, ViewController} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
-import {Geolocation} from "@ionic-native/geolocation";
+import {GeolocationService} from "../../providers/geolocation-service";
 
 @IonicPage()
 @Component({
     selector: 'page-new-place',
     templateUrl: 'new-place.html',
 })
-export class NewPlace implements AfterViewInit {
+export class NewPlace {
     public place: PlaceTypeLong = {
         id: 0,
         name: '',
@@ -19,36 +19,13 @@ export class NewPlace implements AfterViewInit {
         },
     };
 
-    private _geolocation = new Geolocation();
-
     constructor(private _viewCtrl: ViewController,
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController,
-                private _loadingCtrl: LoadingController) {
-        let loading = this._loadingCtrl.create({
-            content: 'Fetching current position...',
-        });
-        loading.present();
-        // options are maybe not needed for real devices, only for emulators
-        this._geolocation.getCurrentPosition({
-            maximumAge: 0,
-            timeout: 5000,
-            enableHighAccuracy: true,
-        })
-            .then(position => {
-                this.place.coordinates.lat = position.coords.latitude;
-                this.place.coordinates.lng = position.coords.longitude;
-                loading.dismiss();
-            })
-            .catch((error: PositionError) => {
-                loading.dismiss();
-                alert(`Position error: '${error.message}'. Error code: ${error.code}`);
-            });
+                private _loadingCtrl: LoadingController,
+                private _geolocationService: GeolocationService) {
+        this.locatePlace();
     }
-
-    public ngAfterViewInit(): void {
-    }
-
 
     public save(): void {
         if (this.place.name != '') {
@@ -65,6 +42,27 @@ export class NewPlace implements AfterViewInit {
 
     public cancel(): void {
         this._viewCtrl.dismiss();
+    }
+
+    /**
+     * Fetches current coordinates and show spinner while fetching is in progress.
+     */
+    public locatePlace(): void {
+        let loading = this._loadingCtrl.create({
+            content: 'Fetching current position...',
+        });
+        loading.present();
+
+        this._geolocationService.getCurrentPosition()
+            .then(position => {
+                this.place.coordinates.lat = position.coords.latitude;
+                this.place.coordinates.lng = position.coords.longitude;
+                loading.dismiss();
+            })
+            .catch((error: PositionError) => {
+                loading.dismiss();
+                alert(`Position error: '${error.message}'. Error code: ${error.code}`);
+            });
     }
 
 }

@@ -12,6 +12,7 @@ import {EditPlace} from "../pages/edit-place/edit-place";
 import {PlaceService} from "../providers/place-service";
 import {NewPlace} from "../pages/new-place/new-place";
 import {SqliteService} from "../providers/sqlite-service";
+import {GeolocationService} from "../providers/geolocation-service";
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import {SqliteService} from "../providers/sqlite-service";
         },
         SqliteService,
         PlaceService,
+        GeolocationService,
     ]
 })
 export class AppModule {
