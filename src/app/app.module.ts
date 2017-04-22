@@ -11,8 +11,8 @@ import {Map} from "../pages/map/map";
 import {EditPlace} from "../pages/edit-place/edit-place";
 import {PlaceService} from "../providers/place-service";
 import {NewPlace} from "../pages/new-place/new-place";
-import {SqliteService} from "../providers/sqlite-service";
 import {GeolocationService} from "../providers/geolocation-service";
+import {IndexedDBService} from "../providers/indexed-db-service";
 
 @NgModule({
     declarations: [
@@ -45,9 +45,9 @@ import {GeolocationService} from "../providers/geolocation-service";
             provide: ErrorHandler,
             useClass: IonicErrorHandler
         },
-        SqliteService,
         PlaceService,
         GeolocationService,
+        IndexedDBService,
     ]
 })
 export class AppModule {

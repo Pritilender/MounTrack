@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
-import {SqliteService} from "./sqlite-service";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
+import {IndexedDBService} from "./indexed-db-service";
 
 export interface PlaceTypeShort {
     id: number;
@@ -23,44 +23,7 @@ export interface PlaceTypeLong {
 
 @Injectable()
 export class PlaceService {
-    private _places: PlaceTypeLong[] = [
-        /*{
-         id: 1,
-         name: 'EditPlace A',
-         description: 'Simple edit-place',
-         coordinates: {
-         lat: 21,
-         lng: 23,
-         },
-         },
-         {
-         id: 2,
-         name: 'EditPlace B',
-         description: 'Again, simple edit-place',
-         coordinates: {
-         lat: 21.23,
-         lng: 41.23,
-         },
-         },
-         {
-         id: 3,
-         name: 'A EditPlace with a long name A',
-         description: 'My god! Such a long name for a simple edit-place! :O',
-         coordinates: {
-         lat: 32.2,
-         lng: 48.2,
-         },
-         },
-         {
-         id: 4,
-         name: 'A EditPlace with a very, very long name B',
-         description: 'My god! Such a long name for a simple edit-place! :O',
-         coordinates: {
-         lat: 22,
-         lng: 49,
-         },
-         },*/
-    ];
+    private _places: PlaceTypeLong[] = [];
     private _placesSubject: ReplaySubject<PlaceTypeLong[]> = new ReplaySubject(1);
     public places$: Observable<PlaceTypeLong[]> = this._placesSubject.asObservable();
 
@@ -95,12 +58,12 @@ export class PlaceService {
      * @param place
      * @returns {string}
      */
-    public addNew(place: PlaceTypeLong): number {
-        let id = Date.now();
-        place.id = id;
-        this._places.push(place);
-        this._placesSubject.next(this._places);
-        return id;
+    public addNew(place: PlaceTypeLong) {
+        this.indexedDB.addObject(place)
+            .subscribe(place => {
+                this._places.push(place);
+                this._placesSubject.next(this._places);
+            });
     }
 
     /**
@@ -112,8 +75,13 @@ export class PlaceService {
         let index = this._places.indexOf(el);
 
         if (index > -1) {
-            this._places[index] = place;
-            this._placesSubject.next(this._places);
+            this.indexedDB.updateObject(place)
+                .subscribe(place => {
+                    if (place) {
+                        this._places[index] = place;
+                        this._placesSubject.next(this._places);
+                    }
+                });
         } else {
             throw `Place ${place.name} doesn't exist!`;
         }
@@ -128,22 +96,29 @@ export class PlaceService {
         let index = this._places.indexOf(el);
 
         if (index > -1) {
-            this._places.splice(index, 1);
-            this._placesSubject.next(this._places);
+            this.indexedDB.deleteObject(placeId)
+                .subscribe(status => {
+                    if (status) {
+                        this._places.splice(index, 1);
+                        this._placesSubject.next(this._places);
+                    }
+                });
         } else {
             throw `Place with id ${placeId} doesn't exist!`;
         }
     }
 
-    constructor(private _sqliteService: SqliteService) {
-        this._sqliteService.dbSubject
-            .subscribe(_ => {
-                this._sqliteService.getPlaces()
-                    .subscribe(places => {
-                        this._places = places;
-                        this._placesSubject.next(this._places);
-                    });
-            });
+    constructor(private indexedDB: IndexedDBService) {
+        this.indexedDB.dbSubject
+            .subscribe(opened => {
+                if (opened) {
+                    this.indexedDB.getObjects()
+                        .subscribe(places => {
+                            this._places = places;
+                            this._placesSubject.next(this._places);
+                        })
+                }
+            })
     }
 
 }
