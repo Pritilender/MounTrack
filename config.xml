@@ -46,5 +46,9 @@
     <variable name="NSLOCATIONWHENINUSEUSAGEDESCRIPTION" value="Show your location on the map"/>
     <variable name="NSLOCATIONALWAYSUSAGEDESCRIPTION" value="Trace your location on the map"/>
   </plugin>
+  <plugin name="cordova-plugin-camera" spec="~2.4.0">
+    <variable name="CAMERA_USAGE_DESCRIPTION" value=" "/>
+    <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" "/>
+  </plugin>
   <engine name="android" spec="~6.2.1"/>
 </widget>

@@ -84,7 +84,7 @@ export class IndexedDBService {
             store.createIndex('description', 'description', {unique: false});
             // store.createIndex('lat', 'lat', {unique: false});
             // store.createIndex('lng', 'lng', {unique: false});
-            store.createIndex('img', 'img', {unique: false});
+            store.createIndex('imgUrl', 'imgUrl', {unique: false});
             store.createIndex('coordinates', 'coordinates', {unique: false});
         };
     }
@@ -107,6 +107,10 @@ export class IndexedDBService {
             place.id = event.target.result;
             subject.next(place);
             subject.complete();
+        };
+        req.onerror = (event: any) => {
+            console.log('Error during place addition');
+            console.log(event);
         };
         return subject.asObservable();
     }

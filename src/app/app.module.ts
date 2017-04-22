@@ -13,6 +13,7 @@ import {PlaceService} from "../providers/place-service";
 import {NewPlace} from "../pages/new-place/new-place";
 import {GeolocationService} from "../providers/geolocation-service";
 import {IndexedDBService} from "../providers/indexed-db-service";
+import {CameraService} from "../providers/camera-service";
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import {IndexedDBService} from "../providers/indexed-db-service";
         PlaceService,
         GeolocationService,
         IndexedDBService,
+        CameraService,
     ]
 })
 export class AppModule {

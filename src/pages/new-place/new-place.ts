@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {AlertController, IonicPage, LoadingController, ViewController} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
 import {GeolocationService} from "../../providers/geolocation-service";
+import {CameraService} from "../../providers/camera-service";
 
 @IonicPage()
 @Component({
@@ -10,20 +11,23 @@ import {GeolocationService} from "../../providers/geolocation-service";
 })
 export class NewPlace {
     public place: PlaceTypeLong = {
-        id: 0,
+        id: Date.now(),
         name: '',
         description: '',
         coordinates: {
             lat: 0,
             lng: 0,
         },
+        imgUrl: '',
     };
 
     constructor(private _viewCtrl: ViewController,
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController,
                 private _loadingCtrl: LoadingController,
-                private _geolocationService: GeolocationService) {
+                private _geolocationService: GeolocationService,
+                private _cameraService: CameraService
+    ) {
         this.locatePlace();
     }
 
@@ -63,6 +67,11 @@ export class NewPlace {
                 loading.dismiss();
                 alert(`Position error: '${error.message}'. Error code: ${error.code}`);
             });
+    }
+
+    public takePicture() {
+        this._cameraService.takePicture()
+            .then(imgUrl => this.place.imgUrl = imgUrl);
     }
 
 }
