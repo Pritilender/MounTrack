@@ -30,7 +30,6 @@
     "@ionic-native/geolocation": "^3.4.4",
     "@ionic-native/google-maps": "^3.4.4",
     "@ionic-native/splash-screen": "3.4.2",
-    "@ionic-native/sqlite": "^3.4.4",
     "@ionic-native/status-bar": "3.4.2",
     "@ionic/storage": "2.0.1",
     "@types/websql": "0.0.27",
