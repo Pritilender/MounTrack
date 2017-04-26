@@ -1,8 +1,16 @@
 import {AfterViewInit, Component} from "@angular/core";
 import {IonicPage, NavController, NavParams, Platform} from "ionic-angular";
-import {GoogleMap, GoogleMapsEvent, GoogleMapsMapTypeId, LatLng} from "@ionic-native/google-maps";
+import {
+    GoogleMap,
+    GoogleMapsEvent,
+    GoogleMapsMapTypeId,
+    LatLng,
+    Marker,
+    MarkerOptions
+} from "@ionic-native/google-maps";
 import {GeolocationService} from "../../providers/geolocation-service";
 import {PlaceService} from "../../providers/place-service";
+import {FilterService} from "../../providers/filter-service";
 
 @IonicPage()
 @Component({
@@ -12,12 +20,17 @@ import {PlaceService} from "../../providers/place-service";
 export class Map implements AfterViewInit {
     // GoogleMap instance
     private _map: GoogleMap;
+    private markers: Marker[];
+    public filterString: string;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private _platform: Platform,
                 private _geolocationService: GeolocationService,
-                private _placeService: PlaceService) {
+                private _placeService: PlaceService,
+                public _filterService: FilterService) {
+        this.filterString = navParams.get("data");
+        this.markers = [];
     }
 
     ngAfterViewInit() {
@@ -65,15 +78,28 @@ export class Map implements AfterViewInit {
                     let position: LatLng = new LatLng(place.coordinates.lat, place.coordinates.lng);
                     let title = place.name;
 
-                    this._map.addMarker({
+                    let marker: MarkerOptions = {
                         position,
                         title,
                         markerClick: (marker) => {
                             marker.showInfoWindow();
                         }
-                    });
+                    };
+                    this._map.addMarker(marker)
+                        .then(marker => this.markers.push(marker));
                 })
+            });
+        this._filterService.filter$
+            .subscribe(filterString => {
+                debugger;
+
+                if (filterString && filterString.trim() != '') {
+                    this.markers.forEach(marker => {
+                        marker.setVisible(marker.getTitle().toLowerCase().indexOf(filterString.toLowerCase()) > -1);
+                    })
+                }
             })
+
     }
 
     /**
@@ -94,6 +120,10 @@ export class Map implements AfterViewInit {
                     });
             })
             .catch(err => alert(`Location error: ${JSON.stringify(err)}`));
+    }
+
+    public setFilter(ev: any) {
+        this._filterService.setFilter(ev.target.value);
     }
 
 }

@@ -2,12 +2,14 @@
   <ion-navbar>
     <ion-title>Places</ion-title>
   </ion-navbar>
+  <ion-searchbar (ionInput)="setFilter($event)">
+  </ion-searchbar>
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <ion-item-sliding *ngFor="let place of places">
+    <ion-item-sliding *ngFor="let place of filteredPlaces">
       <ion-item (tap)="placeIdSelected(place.id)">
         <h1>{{place.name}}</h1>
         <p>{{place.description}}</p>

@@ -15,6 +15,7 @@ import {GeolocationService} from "../providers/geolocation-service";
 import {IndexedDBService} from "../providers/indexed-db-service";
 import {CameraService} from "../providers/camera-service";
 import {Camera} from "@ionic-native/camera";
+import {FilterService} from "../providers/filter-service";
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import {Camera} from "@ionic-native/camera";
         IndexedDBService,
         CameraService,
         Camera,
+        FilterService,
     ]
 })
 export class AppModule {

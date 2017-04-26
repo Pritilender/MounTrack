@@ -7,12 +7,8 @@ import {About} from "../about/about";
     templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
     tab1Root = Places;
     tab2Root = Map;
     tab3Root = About;
 
-    constructor() {
-
-    }
 }

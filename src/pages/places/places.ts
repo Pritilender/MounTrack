@@ -3,6 +3,7 @@ import {AlertController, IonicPage, ModalController, NavController, NavParams} f
 import {EditPlace} from "../edit-place/edit-place";
 import {PlaceService, PlaceTypeShort} from "../../providers/place-service";
 import {NewPlace} from "../new-place/new-place";
+import {FilterService} from "../../providers/filter-service";
 
 @IonicPage()
 @Component({
@@ -11,6 +12,7 @@ import {NewPlace} from "../new-place/new-place";
 })
 export class Places {
     public places: PlaceTypeShort[];
+    public filteredPlaces: PlaceTypeShort[];
 
     /**
      * Navigate to a detail page.
@@ -36,14 +38,26 @@ export class Places {
                 public navParams: NavParams,
                 private _modalCtrl: ModalController,
                 private _placeService: PlaceService,
-                private _alertCtrl: AlertController) {
+                private _alertCtrl: AlertController,
+                public _filterService: FilterService) {
         this._placeService.places$
             .subscribe(places => {
                 this.places = places.map(place => ({
                     name: place.name,
                     id: place.id,
                     description: place.description
-                }))
+                }));
+                this._filterService.filter$
+                    .subscribe(filterString => {
+                        debugger;
+                        this.resetFilteredPlaces();
+
+                        if (filterString && filterString.trim() != '') {
+                            this.filteredPlaces = this.filteredPlaces.filter((place => {
+                                return (place.name.toLowerCase().indexOf(filterString.toLowerCase()) > -1);
+                            }))
+                        }
+                    })
             })
     }
 
@@ -64,5 +78,13 @@ export class Places {
             ]
         });
         prompt.present();
+    }
+
+    private resetFilteredPlaces() {
+        this.filteredPlaces = this.places;
+    }
+
+    public setFilter(ev: any) {
+        this._filterService.setFilter(ev.target.value);
     }
 }
