@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {AlertController, IonicPage, LoadingController, ViewController} from "ionic-angular";
+import {ActionSheetController, AlertController, IonicPage, LoadingController, ViewController} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
 import {GeolocationService} from "../../providers/geolocation-service";
-import {CameraService} from "../../providers/camera-service";
+import {CameraService, CameraSource} from "../../providers/camera-service";
 
 @IonicPage()
 @Component({
@@ -26,8 +26,8 @@ export class NewPlace {
                 private _alertCtrl: AlertController,
                 private _loadingCtrl: LoadingController,
                 private _geolocationService: GeolocationService,
-                private _cameraService: CameraService
-    ) {
+                private _cameraService: CameraService,
+                private _actionSheetCtrl: ActionSheetController) {
         this.locatePlace();
     }
 
@@ -70,8 +70,29 @@ export class NewPlace {
     }
 
     public takePicture() {
-        this._cameraService.takePicture()
-            .then(imgUrl => this.place.imgUrl = imgUrl);
+        let actionSheet = this._actionSheetCtrl.create({
+            title: 'Select image source',
+            buttons: [
+                {
+                    text: 'Camera',
+                    handler: () => {
+                        this._cameraService.takePicture(CameraSource.CAMERA)
+                            .then(imgUrl => this.place.imgUrl = imgUrl)
+                            .catch(err => console.log('Camera canceled'));
+                    },
+                },
+                {
+                    text: 'Gallery',
+                    handler: () => {
+                        this._cameraService.takePicture(CameraSource.GALLERY)
+                            .then(imgUrl => this.place.imgUrl = imgUrl)
+                            .catch(err => console.log('Camera canceled'));
+                    },
+                },
+            ],
+        });
+
+        actionSheet.present();
     }
 
 }

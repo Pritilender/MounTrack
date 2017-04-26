@@ -40,17 +40,17 @@
         </button>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="place.imgUrl">
+      <ion-col>
+        <img width="100%" [src]="place.imgUrl" alt="New place's image">
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
         <button ion-button block icon-right (click)="takePicture()">
           Add a picture!
           <ion-icon name="camera"></ion-icon>
         </button>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="place.imgUrl">
-      <ion-col>
-        <img width="640" height="240" [src]="place.imgUrl">
       </ion-col>
     </ion-row>
     <ion-row>

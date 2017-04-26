@@ -1,8 +1,12 @@
 import {Component} from "@angular/core";
-import {AlertController, IonicPage, LoadingController, NavController, NavParams} from "ionic-angular";
+import {
+    ActionSheetController, AlertController, IonicPage, LoadingController, NavController,
+    NavParams
+} from "ionic-angular";
 import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
 import * as deepCopy from "lodash.clonedeep";
 import {GeolocationService} from "../../providers/geolocation-service";
+import {CameraService, CameraSource} from "../../providers/camera-service";
 
 @IonicPage()
 @Component({
@@ -17,7 +21,9 @@ export class EditPlace {
                 private _placeService: PlaceService,
                 private _alertCtrl: AlertController,
                 private _loadingCtrl: LoadingController,
-                private _geolocationService: GeolocationService
+                private _geolocationService: GeolocationService,
+                private _actionSheetCtrl: ActionSheetController,
+                private _cameraService: CameraService
     ) {
         let id: number = navParams.get('data')['id'];
         // deep copy place to avoid changing the original element because of ngModel
@@ -80,6 +86,32 @@ export class EditPlace {
                 loading.dismiss();
                 alert(`Position error: '${error.message}'. Error code: ${error.code}`);
             });
+    }
+
+    public takePicture() {
+        let actionSheet = this._actionSheetCtrl.create({
+            title: 'Select image source',
+            buttons: [
+                {
+                    text: 'Camera',
+                    handler: () => {
+                        this._cameraService.takePicture(CameraSource.CAMERA)
+                            .then(imgUrl => this.place.imgUrl = imgUrl)
+                            .catch(err => console.log('Camera canceled'));
+                    },
+                },
+                {
+                    text: 'Gallery',
+                    handler: () => {
+                        this._cameraService.takePicture(CameraSource.GALLERY)
+                            .then(imgUrl => this.place.imgUrl = imgUrl)
+                            .catch(err => console.log('Camera canceled'));
+                    },
+                },
+            ],
+        });
+
+        actionSheet.present();
     }
 
 }
