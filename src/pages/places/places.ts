@@ -49,9 +49,7 @@ export class Places {
                 }));
                 this._filterService.filter$
                     .subscribe(filterString => {
-                        debugger;
                         this.resetFilteredPlaces();
-
                         if (filterString && filterString.trim() != '') {
                             this.filteredPlaces = this.filteredPlaces.filter((place => {
                                 return (place.name.toLowerCase().indexOf(filterString.toLowerCase()) > -1);

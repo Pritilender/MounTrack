@@ -5,6 +5,10 @@
   </ion-navbar>
   <ion-searchbar (ionInput)="setFilter($event)">
   </ion-searchbar>
+  <ion-range min="20" max="10000" [(ngModel)]="radius" (ngModelChange)="updateCircleRadius()">
+    <ion-label range-left>20m</ion-label>
+    <ion-label range-right>10km</ion-label>
+  </ion-range>
 
 </ion-header>
 

@@ -1,6 +1,7 @@
 import {AfterViewInit, Component} from "@angular/core";
 import {IonicPage, NavController, NavParams, Platform} from "ionic-angular";
 import {
+    Circle,
     GoogleMap,
     GoogleMapsEvent,
     GoogleMapsMapTypeId,
@@ -22,6 +23,9 @@ export class Map implements AfterViewInit {
     private _map: GoogleMap;
     private markers: Marker[];
     public filterString: string;
+    private _center: LatLng;
+    private _circle: Circle;
+    public radius: number = 20;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -91,8 +95,6 @@ export class Map implements AfterViewInit {
             });
         this._filterService.filter$
             .subscribe(filterString => {
-                debugger;
-
                 if (filterString && filterString.trim() != '') {
                     this.markers.forEach(marker => {
                         marker.setVisible(marker.getTitle().toLowerCase().indexOf(filterString.toLowerCase()) > -1);
@@ -108,14 +110,15 @@ export class Map implements AfterViewInit {
     private loadMap(): void {
         this._geolocationService.getCurrentPosition()
             .then(position => {
-                let center = new LatLng(position.coords.latitude, position.coords.longitude);
+                this._center = new LatLng(position.coords.latitude, position.coords.longitude);
                 this._map = new GoogleMap('map');
 
                 this._map.one(GoogleMapsEvent.MAP_READY)
                     .then(_ => {
                         // this happens only once, so we are safe from subscribing too many times
                         console.log('Map is ready');
-                        this.setMapOptions(center);
+                        this.setMapOptions(this._center);
+                        this.drawCircle();
                         this.loadMarkers();
                     });
             })
@@ -124,6 +127,22 @@ export class Map implements AfterViewInit {
 
     public setFilter(ev: any) {
         this._filterService.setFilter(ev.target.value);
+    }
+
+    private drawCircle() {
+        this._map.addCircle({
+            center: this._center,
+            radius: this.radius,
+            strokeColor: '#000000',
+            strokeWidth: 1,
+            fillColor: '#FFC5A9',
+        }).then(circle => {
+            this._circle = circle;
+        })
+    }
+
+    public updateCircleRadius() {
+        this._circle.setRadius(this.radius);
     }
 
 }
