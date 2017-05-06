@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {ActionSheetController, AlertController, IonicPage, LoadingController, ViewController} from "ionic-angular";
-import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
+import {PlaceService, PlaceType} from "../../providers/place-service";
 import {GeolocationService} from "../../providers/geolocation-service";
 import {CameraService, CameraSource} from "../../providers/camera-service";
 
@@ -10,7 +10,7 @@ import {CameraService, CameraSource} from "../../providers/camera-service";
     templateUrl: 'new-place.html',
 })
 export class NewPlace {
-    public place: PlaceTypeLong = {
+    public place: PlaceType = {
         id: Date.now(),
         name: '',
         description: '',

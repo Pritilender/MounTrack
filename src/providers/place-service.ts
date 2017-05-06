@@ -4,7 +4,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
 import {IndexedDBService} from "./indexed-db-service";
 
-export interface PlaceTypeLong {
+export interface PlaceType {
     id: number;
     name: string;
     description: string;
@@ -17,16 +17,16 @@ export interface PlaceTypeLong {
 
 @Injectable()
 export class PlaceService {
-    private _places: PlaceTypeLong[] = [];
-    private _placesSubject: ReplaySubject<PlaceTypeLong[]> = new ReplaySubject(1);
-    public places$: Observable<PlaceTypeLong[]> = this._placesSubject.asObservable();
+    private _places: PlaceType[] = [];
+    private _placesSubject: ReplaySubject<PlaceType[]> = new ReplaySubject(1);
+    public places$: Observable<PlaceType[]> = this._placesSubject.asObservable();
 
     /**
      *
      * @param id
-     * @returns {PlaceTypeLong}
+     * @returns {PlaceType}
      */
-    public getPlaceById(id: number): PlaceTypeLong {
+    public getPlaceById(id: number): PlaceType {
         let place = this._places.find(place => place.id == id);
         if (place) {
             return place;
@@ -40,7 +40,7 @@ export class PlaceService {
      * @param place
      * @returns {string}
      */
-    public addNew(place: PlaceTypeLong) {
+    public addNew(place: PlaceType) {
         this.indexedDB.addObject(place)
             .subscribe(place => {
                 this._places.push(place);
@@ -52,7 +52,7 @@ export class PlaceService {
      *
      * @param place
      */
-    public editPlace(place: PlaceTypeLong): void {
+    public editPlace(place: PlaceType): void {
         let el = this._places.find(element => element.id == place.id);
         let index = this._places.indexOf(el);
 

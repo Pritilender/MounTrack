@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {AlertController, IonicPage, ModalController, NavController, NavParams, Platform} from "ionic-angular";
 import {EditPlace} from "../edit-place/edit-place";
-import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
+import {PlaceService, PlaceType} from "../../providers/place-service";
 import {NewPlace} from "../new-place/new-place";
 import {FilterService} from "../../providers/filter-service";
 import {GeolocationService} from "../../providers/geolocation-service";
@@ -14,8 +14,8 @@ import {LocalNotifications} from "@ionic-native/local-notifications";
     templateUrl: 'places.html',
 })
 export class Places {
-    public places: PlaceTypeLong[];
-    public filteredPlaces: PlaceTypeLong[];
+    public places: PlaceType[];
+    public filteredPlaces: PlaceType[];
     private bgPlugin: any;
 
     /**
@@ -65,7 +65,7 @@ export class Places {
         this.platform.ready().then(this.configureBackgroundGeolocation.bind(this));
     }
 
-    public deletePlace(place: PlaceTypeLong): void {
+    public deletePlace(place: PlaceType): void {
         let prompt = this._alertCtrl.create({
             title: "Warning!",
             message: `Are you sure you want to delete place "${place.name}" from your places list?`,

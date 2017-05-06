@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import "rxjs/add/operator/map";
-import {PlaceTypeLong} from "./place-service";
+import {PlaceType} from "./place-service";
 import {Platform} from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Observable} from "rxjs/Observable";
@@ -17,7 +17,7 @@ export class IndexedDBService {
     private db: IDBDatabase;
     private indDb: IDBFactory = window.indexedDB;
 
-    private dummyData: PlaceTypeLong[] = [
+    private dummyData: PlaceType[] = [
         {
             id: 1,
             name: 'EditPlace A',
@@ -99,8 +99,8 @@ export class IndexedDBService {
         return this.db.transaction(this.DB_STORE_NAME, mode).objectStore(this.DB_STORE_NAME);
     }
 
-    public addObject(place: PlaceTypeLong): Observable<PlaceTypeLong> {
-        let subject: Subject<PlaceTypeLong> = new Subject();
+    public addObject(place: PlaceType): Observable<PlaceType> {
+        let subject: Subject<PlaceType> = new Subject();
         let req = this.getObjectStore('readwrite').add(place);
         req.onsuccess = (event: any) => {
             console.log('place added');
@@ -130,15 +130,15 @@ export class IndexedDBService {
         return subject.asObservable();
     }
 
-    public getObjects(): Observable<PlaceTypeLong[]> {
+    public getObjects(): Observable<PlaceType[]> {
         console.log('Fetching all objects...');
         let store = this.getObjectStore('readonly');
-        let places: BehaviorSubject<PlaceTypeLong[]> = new BehaviorSubject([]);
+        let places: BehaviorSubject<PlaceType[]> = new BehaviorSubject([]);
 
         store.openCursor().onsuccess = (event: any) => {
             let cursor: IDBCursorWithValue = event.target.result;
             if (cursor) {
-                let place: PlaceTypeLong = cursor.value;
+                let place: PlaceType = cursor.value;
                 places.getValue().push(place);
                 cursor.continue();
             } else {
@@ -152,8 +152,8 @@ export class IndexedDBService {
         return places.asObservable();
     }
 
-    public updateObject(place: PlaceTypeLong): Observable<PlaceTypeLong> {
-        let subject: Subject<PlaceTypeLong> = new Subject();
+    public updateObject(place: PlaceType): Observable<PlaceType> {
+        let subject: Subject<PlaceType> = new Subject();
 
         let req = this.getObjectStore('readwrite').put(place);
         req.onsuccess = (event: any) => {

@@ -3,7 +3,7 @@ import {
     ActionSheetController, AlertController, IonicPage, LoadingController, NavController,
     NavParams
 } from "ionic-angular";
-import {PlaceService, PlaceTypeLong} from "../../providers/place-service";
+import {PlaceService, PlaceType} from "../../providers/place-service";
 import * as deepCopy from "lodash.clonedeep";
 import {GeolocationService} from "../../providers/geolocation-service";
 import {CameraService, CameraSource} from "../../providers/camera-service";
@@ -14,7 +14,7 @@ import {CameraService, CameraSource} from "../../providers/camera-service";
     templateUrl: 'edit-place.html',
 })
 export class EditPlace {
-    public place: PlaceTypeLong;
+    public place: PlaceType;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
