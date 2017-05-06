@@ -4,12 +4,6 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 import {Observable} from "rxjs/Observable";
 import {IndexedDBService} from "./indexed-db-service";
 
-export interface PlaceTypeShort {
-    id: number;
-    name: string;
-    description: string;
-}
-
 export interface PlaceTypeLong {
     id: number;
     name: string;
@@ -26,18 +20,6 @@ export class PlaceService {
     private _places: PlaceTypeLong[] = [];
     private _placesSubject: ReplaySubject<PlaceTypeLong[]> = new ReplaySubject(1);
     public places$: Observable<PlaceTypeLong[]> = this._placesSubject.asObservable();
-
-    /**
-     *
-     * @returns {[{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string},{id: string, name: string, description: string}]}
-     */
-    public getShortPlaces(): PlaceTypeShort[] {
-        return this._places.map(place => ({
-            id: place.id,
-            name: place.name,
-            description: place.description,
-        }));
-    }
 
     /**
      *

@@ -28,5 +28,5 @@ Running in browser with `ionic serve` is **not advised** due to the fact that so
 
 ## Known bugs
 
-+ SQLite failure on iOS simulator -- this should be tested on a real device.
 + Geolocation not working on Android device in livereload session.
++ Google Maps Plugin is a child that doesn't want to play with other children, so you need to change its google play services to `+` in `plugins.xml` after adding it to the project then remove all platforms and readd them.

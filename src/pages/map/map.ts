@@ -147,29 +147,12 @@ export class Map implements AfterViewInit {
         this.filterMarkers();
     }
 
-    private degToRad(degree: number): number {
-        return degree * Math.PI / 180;
-    }
-
-    private distanceInMeters(a: LatLng, b: LatLng): number {
-        let earthRadiusM = 6371000;
-        let dLat = this.degToRad(b.lat - a.lat);
-        let dLng = this.degToRad(b.lng - a.lng);
-
-        let h1 = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLng / 2), 2) * Math.cos(a.lat) * Math.cos(b.lat);
-        let h2 = 2 * Math.atan2(Math.sqrt(h1), Math.sqrt(1 - h1));
-        return earthRadiusM * h2;
-    }
-
     private filterMarkers() {
         this.markers.forEach(marker => {
             marker.getPosition()
                 .then(position => {
-                    if (this.distanceInMeters(position, this._center) > this.radius) {
-                        marker.setVisible(false);
-                    } else {
-                        marker.setVisible(true);
-                    }
+                    this._geolocationService.isInRadius(position, this.radius)
+                        .then(isIn => marker.setVisible(isIn));
                 })
         })
     }

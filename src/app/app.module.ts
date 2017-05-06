@@ -16,6 +16,7 @@ import {IndexedDBService} from "../providers/indexed-db-service";
 import {CameraService} from "../providers/camera-service";
 import {Camera} from "@ionic-native/camera";
 import {FilterService} from "../providers/filter-service";
+import {LocalNotifications} from "@ionic-native/local-notifications";
 
 @NgModule({
     declarations: [
@@ -54,6 +55,7 @@ import {FilterService} from "../providers/filter-service";
         CameraService,
         Camera,
         FilterService,
+        LocalNotifications,
     ]
 })
 export class AppModule {

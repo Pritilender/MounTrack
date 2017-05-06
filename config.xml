@@ -34,7 +34,10 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <engine name="android" spec="~6.2.1" />
+    <engine name="android" spec="^6.2.3" />
+    <plugin name="cordova-background-geolocation-lt" spec="^2.6.0">
+        <variable name="LICENSE" value="4bbb513c013111eae951647fd4f9e79f127fce6f7a00e9d327db9ea2a053a0df" />
+    </plugin>
     <plugin name="cordova-plugin-camera" spec="~2.4.0">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
@@ -51,5 +54,6 @@
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="~2.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="~1.3.1" />
+    <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.4" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
 </widget>
