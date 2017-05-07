@@ -18,43 +18,133 @@ export class IndexedDBService {
     private indDb: IDBFactory = window.indexedDB;
 
     private dummyData: PlaceType[] = [
-        {
-            id: 1,
-            name: 'EditPlace A',
-            description: 'Simple edit-place',
-            coordinates: {
-                lat: 21,
-                lng: 23,
-            },
+    {
+        id: 1,
+        name: 'Mladenova kuća',
+        description: 'Turbo Rezidencija',
+        coordinates: {
+            lat: 43.3287605,
+            lng: 21.914337,
         },
-        {
-            id: 2,
-            name: 'EditPlace B',
-            description: 'Again, simple edit-place',
-            coordinates: {
-                lat: 21.23,
-                lng: 41.23,
-            },
+    },
+    {
+        id: 2,
+        name: 'Zaplanjac',
+        description: 'Pljeske bez soje, dece mi moje',
+        coordinates: {
+            lat: 43.3287456,
+            lng: 21.9156871,
         },
-        {
-            id: 3,
-            name: 'A EditPlace with a long name A',
-            description: 'My god! Such a long name for a simple edit-place! :O',
-            coordinates: {
-                lat: 32.2,
-                lng: 48.2,
-            },
+    },
+    {
+        id: 3,
+        name: 'Pošta Srbije',
+        description: 'Tu šaljemo pakovanja od Grand kafe za nagradnu igru',
+        coordinates: {
+            lat: 43.3290578,
+            lng: 21.9206761,
         },
+    },
+    {
+        id: 4,
+        name: 'Tržni centar Merkator',
+        description: 'Tu radi moja sestra',
+        coordinates: {
+            lat: 43.3237447,
+            lng: 21.9255496,
+        },
+    },
+    {
+        id: 5,
+        name: 'OŠ Duško Radović',
+        description: 'Tu je Midža mogao ići u školu',
+        coordinates: {
+            lat: 43.3198303,
+            lng: 21.9295193,
+        },
+    },
+    {
+        id: 6,
+        name: 'Ideja',
+        description: 'Sve što nam treba',
+        coordinates: {
+            lat: 43.3171608,
+            lng: 21.9292779,
+        },
+    },
+    {
+        id: 7,
+        name: 'Miksina kuća',
+        description: 'Rezidencija OMM',
+        coordinates: {
+            lat: 43.317215,
+            lng: 21.9317567,
+        },
+    },
         {
-            id: 4,
-            name: 'A EditPlace with a very, very long name B',
-            description: 'My god! Such a long name for a simple edit-place! :O',
-            coordinates: {
-                lat: 22,
-                lng: 49,
-            },
-        }
-    ];
+        id: 8,
+        name: 'Dva Jarana',
+        description: 'Vrh Kafana',
+        coordinates: {
+            lat: 43.3182727,
+            lng: 21.9288223,
+        },
+    },
+    {
+        id: 9,
+        name: 'Sred mosta',
+        description: 'Bilo je dosta',
+        coordinates: {
+            lat: 43.325301,
+            lng: 21.9244237,
+        },
+    },
+    {
+        id: 10,
+        name: 'Nikole Uzunovića 41',
+        description: '',
+        coordinates: {
+            lat: 43.316538,
+            lng: 21.9313587,
+        },
+    },
+    {
+        id: 11,
+        name: 'Južnomoravske brigade 55',
+        description: 'Bilo je dosta',
+        coordinates: {
+            lat: 43.315504,
+            lng: 21.9314338,
+        },
+    },
+    {
+        id: 12,
+        name: 'Filipa Filipovića 33',
+        description: '',
+        coordinates: {
+            lat: 43.31573,
+            lng: 21.9307048,
+        },
+    },
+    {
+        id: 13,
+        name: 'Vere Blagojević 8',
+        description: '',
+        coordinates: {
+            lat: 43.3166522,
+            lng: 21.9311088,
+        },
+    },
+    {
+        id: 14,
+        name: 'Vere Blagojević 14',
+        description: '',
+        coordinates: {
+            lat: 43.3165285,
+            lng: 21.9316524,
+        },
+    }
+];
     public dbSubject: ReplaySubject<boolean> = new ReplaySubject(1);
 
     constructor(private _platform: Platform) {
@@ -67,6 +157,7 @@ export class IndexedDBService {
         let req = this.indDb.open(this.DB_NAME, this.DB_VERSION);
         req.onsuccess = (event: any) => {
             this.db = req.result;
+            // this.loadData();
             this.dbSubject.next(true);
             console.log("IndexedDB opened!");
         };
@@ -75,7 +166,7 @@ export class IndexedDBService {
         };
 
         req.onupgradeneeded = (event: any) => {
-            console.log("IndexedDB upgrade needed...");
+            console.log("IndexedDB upgrade needed...");            
             let store = event.currentTarget.result.createObjectStore(
                 this.DB_STORE_NAME, {keyPath: 'id', autoIncrement: true}
             );
@@ -86,6 +177,7 @@ export class IndexedDBService {
             // store.createIndex('lng', 'lng', {unique: false});
             store.createIndex('imgUrl', 'imgUrl', {unique: false});
             store.createIndex('coordinates', 'coordinates', {unique: false});
+
         };
     }
 

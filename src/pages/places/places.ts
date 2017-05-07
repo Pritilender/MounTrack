@@ -108,12 +108,14 @@ export class Places {
     }
 
     private onLocation(location, taskId) {
+        console.log('location change detected');
         let radius = 20;
         this.places.forEach(place => {
             let placeLatLng: LatLng = new LatLng(place.coordinates.lat, place.coordinates.lng);
             this._geolocationService.isInRadius(placeLatLng, radius)
                 .then(isIn => {
                     if (isIn) {
+                        console.log('a place is in', place.name);
                         this._localNotifications.schedule({
                             id: place.id,
                             title: `MounTrack notification!`,

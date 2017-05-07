@@ -76,9 +76,11 @@ export class Map implements AfterViewInit {
      * Subscribe to PlaceService and display markers for all places.
      */
     private loadMarkers(): void {
+        console.log('loading markers');
         this._placeService.places$
             .subscribe(places => {
                 places.forEach(place => {
+                    // console.log('for place', place.name);
                     let position: LatLng = new LatLng(place.coordinates.lat, place.coordinates.lng);
                     let title = place.name;
 
